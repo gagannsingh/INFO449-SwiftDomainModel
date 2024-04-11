@@ -74,14 +74,6 @@ public class Job {
             return Int(salary)
         }
     }
-    func raise(byAmount: Double) {
-            switch type {
-            case .Hourly(let wage):
-                type = .Hourly(wage + byAmount)
-            case .Salary(let salary):
-                type = .Salary(salary + UInt(byAmount))
-            }
-        }
     func raise(byPercent: Double){
         switch type {
         case .Hourly(let wage):
@@ -93,11 +85,17 @@ public class Job {
             let newSalary = Double(salary) * raiseFactor
             type = .Salary(UInt(newSalary))
         }
-        
     }
-
+    
+    func raise(byAmount: Double) {
+            switch type {
+            case .Hourly(let wage):
+                type = .Hourly(wage + byAmount)
+            case .Salary(let salary):
+                type = .Salary(salary + UInt(byAmount))
+            }
+        }
     }
-
 
 ////////////////////////////////////
 // Person
@@ -165,14 +163,6 @@ public class Family {
         }
     }
     
-    func haveChild(_ kid: Person) -> Bool {
-        if members[0].age > 21 || members[1].age > 21 {
-            members.append(kid)
-            return true
-        }
-        return false
-    }
-    
     func householdIncome() -> Int {
         var famIncome = 0
         for person in members{
@@ -182,5 +172,13 @@ public class Family {
             }
         }
         return famIncome
+    }
+    
+    func haveChild(_ kid: Person) -> Bool {
+        if members[0].age > 21 || members[1].age > 21 {
+            members.append(kid)
+            return true
+        }
+        return false
     }
 }
